@@ -17,7 +17,7 @@ public class PlayerCamera : MonoBehaviour
     ///<summary>
     ///
     /// </summary>
-    [SerializeField] private float m_DampingRotation = 0.15f;
+    [SerializeField, Range(0.0f, 1.0f)] private float m_DampingRotation = 0.15f;
 
     ///<summary>
     ///
