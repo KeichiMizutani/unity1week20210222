@@ -15,7 +15,9 @@ public class BallController : EntityController
 
     [SerializeField] Text energyText;
     [SerializeField] GameObject rotationChecker;
+    [SerializeField] ParticleSystem powerParticle;
     private int rotateCount = 0;
+    private int powerCount = 0;
 
     private bool[] rotationCheckerFlags = { false, false, false, false };
 
@@ -32,6 +34,12 @@ public class BallController : EntityController
 
         float ap = entityStatus.Energy();
         energyText.text = (ap * Mathf.Pow(attackBonusRatio, rotateCount)).ToString("f2");
+
+        if (rotateCount <= 10)
+        {
+            powerCount = rotateCount;
+        }
+        powerParticle.emissionRate = 10f * powerCount;
 
         if (variableJoystick.isPointerDown)
         {
@@ -94,6 +102,7 @@ public class BallController : EntityController
 
     private void OnRotated()
     {
+
         rotateCount++;
         for (int i = 0; i < rotationCheckerFlags.Length; i++)
         {
