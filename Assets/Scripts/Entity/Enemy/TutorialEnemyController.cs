@@ -6,7 +6,7 @@ public class TutorialEnemyController : EntityController
 {
     public override void Start()
     {
-        entityStatus = new TutorialEnemyStatus();
+        entityStatus = new TutorialEnemyStatus(1000.0f, 1.0f, 0f);
         base.Start();
     }
 

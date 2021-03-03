@@ -7,6 +7,13 @@ using UnityEngine;
 /// </summary>
 public class BulletStatus : EntityStatus
 {
+    public BulletStatus(float hp, float mass, float maxVelocity) : base(hp, mass, maxVelocity)
+    {
+        HP = hp;
+        Mass = mass;
+        MaxVelocity = maxVelocity;
+    }
+
     public enum BulletType
     {
         STRAIGHT,

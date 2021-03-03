@@ -26,7 +26,11 @@ public class EntityController : MonoBehaviour, IDamagable
 
     public virtual void FixedUpdate()
     {
-        entityStatus.Mass = rb.mass;
+        rb.mass = entityStatus.Mass;
+        if(rb.velocity.magnitude >= entityStatus.MaxVelocity)
+        {
+            rb.velocity = rb.velocity.normalized * entityStatus.MaxVelocity;
+        }
         entityStatus.Velocity = rb.velocity.magnitude;
     }
 

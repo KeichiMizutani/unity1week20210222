@@ -20,7 +20,7 @@ public class BallController : EntityController
 
     public override void Start()
     {
-        entityStatus = new PlayerStatus();
+        entityStatus = new PlayerStatus(1000.0f, 7.25748f, 20.0f);
         playerStatus = this.gameObject.GetComponent<BallController>().entityStatus as PlayerStatus;
         rotationChecker.transform.parent = null;
         base.Start();
