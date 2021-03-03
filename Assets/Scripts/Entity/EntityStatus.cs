@@ -4,64 +4,91 @@ using UnityEngine;
 
 public class EntityStatus
 {
-    private float hp = 0.0f;
+    private float _hp = 0.0f;
     public float HP
     {
         get
         {
-            return hp;
+            return _hp;
         }
         protected set
         {
             if(value < 0.0f)
             {
-                hp = 0.0f;
+                _hp = 0.0f;
             }
             else
             {
-                hp = value;
+                _hp = value;
             }
         }
     }
 
-    private float mass = 0.0f;
+    private float _mass = 0.0f;
     public float Mass
     {
         get
         {
-            return mass;
+            return _mass;
         }
         set
         {
             if(value < 0.0f)
             {
-                mass = 0.0f;
+                _mass = 0.0f;
             }
             else
             {
-                mass = value;
+                _mass = value;
             }
         }
     }
 
-    private float velocity = 0.0f;
+    private float _velocity = 0.0f;
     public float Velocity
     {
         get
         {
-            return velocity;
+            return _velocity;
         }
         set
         {
             if (value < 0.0f)
             {
-                velocity = 0.0f;
+                _velocity = 0.0f;
             }
             else
             {
-                velocity = value;
+                _velocity = value;
             }
         }
+    }
+
+    public float _maxVelocity = 0.0f;
+    public float MaxVelocity
+    {
+        get
+        {
+            return _maxVelocity;
+        }
+        set
+        {
+            if (value < 0.0f)
+            {
+                _maxVelocity = 0.0f;
+            }
+            else
+            {
+                _maxVelocity = value;
+            }
+        }
+    }
+
+    public EntityStatus(float hp, float mass, float maxVelocity)
+    {
+        HP = hp;
+        Mass = mass;
+        MaxVelocity = maxVelocity;
     }
 
     public virtual float Energy()
