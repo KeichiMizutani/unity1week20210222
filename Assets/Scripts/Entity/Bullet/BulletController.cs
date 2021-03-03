@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// 弾のEntityとしての属性
+/// </summary>
 public class BulletController : EntityController
 {
     

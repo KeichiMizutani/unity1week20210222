@@ -10,7 +10,7 @@ interface IDamagable
 
 public class EntityController : MonoBehaviour, IDamagable
 {
-    protected Rigidbody rb;
+    public Rigidbody rb;
     public EntityStatus entityStatus;
 
 
