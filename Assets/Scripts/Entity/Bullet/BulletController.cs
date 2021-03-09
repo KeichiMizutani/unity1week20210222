@@ -8,10 +8,10 @@ using UnityEngine;
 /// </summary>
 public class BulletController : EntityController
 {
-    
-
     public override void Start()
     {
+        
+
         base.Start();
     }
 
