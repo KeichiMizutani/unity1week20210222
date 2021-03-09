@@ -5,23 +5,23 @@ using UnityEngine.UI;
 
 public class BallController : EntityController
 {
-    ///<summary>
-    ///
-    ///</summary>
-    [SerializeField] VariableJoystick variableJoystick;
-    [SerializeField] float speed;
+    [SerializeField] private VariableJoystick variableJoystick;
+    private PlayerStatus playerStatus;
+    
     private Vector3 direction;
-    private float attackBonusRatio = 1.3f;
 
-    [SerializeField] Text energyText;
-    [SerializeField] GameObject rotationChecker;
+    [SerializeField] private Text energyText;
+    [SerializeField] private GameObject rotationChecker;
+    [SerializeField] private ParticleSystem powerParticle;
     private int rotateCount = 0;
+    private int powerCount = 0;
 
     private bool[] rotationCheckerFlags = { false, false, false, false };
 
     public override void Start()
     {
-        entityStatus = new PlayerStatus();
+        entityStatus = new PlayerStatus(1000.0f, 7.25748f, 20.0f);
+        playerStatus = this.gameObject.GetComponent<BallController>().entityStatus as PlayerStatus;
         rotationChecker.transform.parent = null;
         base.Start();
     }
@@ -31,7 +31,14 @@ public class BallController : EntityController
         base.Update();
 
         float ap = entityStatus.Energy();
-        energyText.text = (ap * Mathf.Pow(attackBonusRatio, rotateCount)).ToString("f2");
+        energyText.text = (ap * Mathf.Pow(playerStatus.attackBonusRatio, rotateCount)).ToString("f2");
+
+        if (rotateCount <= 10)
+        {
+            powerCount = rotateCount;
+        }
+        ParticleSystem.EmissionModule m_emission = powerParticle.emission;
+        m_emission.rateOverTime = 10f * powerCount;
 
         if (variableJoystick.isPointerDown)
         {
@@ -75,14 +82,14 @@ public class BallController : EntityController
 
         rotationChecker.transform.LookAt(new Vector3(variableJoystick.Horizontal, transform.position.y + 1, variableJoystick.Vertical));
 
-        rb.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        rb.AddForce(direction * playerStatus.speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 
     public override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<IDamagable>() != null)
         {
-            other.gameObject.GetComponent<IDamagable>().AddDamage(entityStatus.Energy() * Mathf.Pow(attackBonusRatio, rotateCount));
+            other.gameObject.GetComponent<IDamagable>().AddDamage(entityStatus.Energy() * Mathf.Pow(playerStatus.attackBonusRatio, rotateCount));
             rotateCount = 0;
         }
     }
@@ -94,6 +101,7 @@ public class BallController : EntityController
 
     private void OnRotated()
     {
+
         rotateCount++;
         for (int i = 0; i < rotationCheckerFlags.Length; i++)
         {
